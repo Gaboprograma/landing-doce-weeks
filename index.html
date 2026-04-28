@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Doce Weeks — Transforma tu cuerpo en 12 semanas</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --rojo: #E63946;
+  --rojo-oscuro: #C1121F;
+  --rojo-suave: #FFF0F0;
+  --negro: #111111;
+  --gris-oscuro: #1C1C1C;
+  --gris-medio: #3A3A3A;
+  --gris-texto: #555;
+  --gris-claro: #F5F5F5;
+  --blanco: #FFFFFF;
+  --blanco-off: #FAFAF8;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Montserrat', sans-serif; background: var(--blanco); color: var(--negro); overflow-x: hidden; line-height: 1.6; }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  padding: 0 24px;
+  height: 64px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-logo { font-weight: 900; font-size: 20px; color: var(--negro); letter-spacing: -0.03em; }
+.nav-logo span { color: var(--rojo); }
+.nav-links { display: flex; gap: 32px; list-style: none; }
+.nav-links a { text-decoration: none; font-size: 13px; font-weight: 600; color: var(--gris-texto); letter-spacing: 0.04em; text-transform: uppercase; transition: color 0.2s; }
+.nav-links a:hover { color: var(--rojo); }
+.nav-cta { background: var(--rojo); color: white; padding: 10px 22px; border-radius: 40px; font-size: 13px; font-weight: 700; text-decoration: none; transition: background 0.2s, transform 0.15s; }
+.nav-cta:hover { background: var(--rojo-oscuro); transform: translateY(-1px); }
+.nav-mobile-toggle { display: none; background: none; border: none; cursor: pointer; font-size: 22px; }
+
+/* ── UTILITIES ── */
+.container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+.tag { display: inline-block; background: var(--rojo); color: white; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; padding: 5px 16px; border-radius: 30px; margin-bottom: 20px; }
+.tag-outline { display: inline-block; border: 1.5px solid var(--rojo); color: var(--rojo); font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; padding: 5px 16px; border-radius: 30px; margin-bottom: 20px; }
+.section-header { text-align: center; margin-bottom: 64px; }
+.section-header h2 { font-size: clamp(28px, 4vw, 44px); font-weight: 900; line-height: 1.15; }
+.section-header p { font-size: 17px; color: var(--gris-texto); margin-top: 14px; font-weight: 400; max-width: 560px; margin-left: auto; margin-right: auto; }
+
+.btn { display: inline-block; padding: 15px 32px; border-radius: 40px; font-weight: 700; text-decoration: none; transition: all 0.25s; cursor: pointer; font-size: 15px; border: none; font-family: 'Montserrat', sans-serif; letter-spacing: 0.02em; }
+.btn-rojo { background: var(--rojo); color: white; box-shadow: 0 4px 18px rgba(230,57,70,0.3); }
+.btn-rojo:hover { background: var(--rojo-oscuro); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(230,57,70,0.4); }
+.btn-negro { background: var(--negro); color: white; }
+.btn-negro:hover { background: #333; transform: translateY(-2px); }
+.btn-outline { background: transparent; border: 2px solid var(--negro); color: var(--negro); }
+.btn-outline:hover { background: var(--negro); color: white; transform: translateY(-2px); }
+.btn-grande { padding: 18px 44px; font-size: 17px; }
+
+/* REVEAL */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
+.reveal.visible { opacity: 1; transform: none; }
+
+/* ── HERO ── */
+#hero {
+  min-height: 100vh;
+  padding: 120px 24px 80px;
+  background: var(--blanco);
+  display: flex; align-items: center;
+  position: relative; overflow: hidden;
+}
+#hero::after {
+  content: 'DW';
+  position: absolute; right: -60px; top: 50%; transform: translateY(-50%);
+  font-size: clamp(180px, 28vw, 380px); font-weight: 900;
+  color: rgba(230,57,70,0.04); pointer-events: none; line-height: 1;
+  letter-spacing: -0.05em;
+}
+.hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 60px; align-items: center; max-width: 1160px; margin: 0 auto; position: relative; z-index: 1; }
+.hero-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--rojo-suave); color: var(--rojo); border: 1px solid rgba(230,57,70,0.2); font-size: 12px; font-weight: 700; padding: 7px 16px; border-radius: 40px; margin-bottom: 28px; }
+.hero-badge .dot { width: 8px; height: 8px; background: var(--rojo); border-radius: 50%; animation: pulse 1.5s ease infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.7)} }
+
+#hero h1 { font-size: clamp(38px, 6vw, 72px); font-weight: 900; line-height: 1.08; letter-spacing: -0.03em; margin-bottom: 24px; }
+#hero h1 .rojo { color: var(--rojo); }
+#hero > .hero-grid .hero-text > p { font-size: 18px; color: var(--gris-texto); max-width: 480px; margin-bottom: 40px; font-weight: 400; line-height: 1.7; }
+.hero-buttons { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 60px; }
+.hero-stats { display: flex; gap: 40px; flex-wrap: wrap; padding-top: 40px; border-top: 1px solid rgba(0,0,0,0.08); }
+.stat .numero { font-size: 38px; font-weight: 900; color: var(--rojo); display: block; line-height: 1; margin-bottom: 6px; }
+.stat .label { font-size: 12px; color: var(--gris-texto); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+
+.hero-foto {
+  background: linear-gradient(145deg, #f0f0f0, #e8e8e8);
+  border-radius: 24px;
+  aspect-ratio: 4/5;
+  display: flex; align-items: center; justify-content: center;
+  color: #aaa; font-size: 14px; font-weight: 600;
+  position: relative; overflow: hidden;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.12);
+}
+.hero-foto img { width: 100%; height: 100%; object-fit: cover; border-radius: 24px; }
+.hero-foto-placeholder { text-align: center; padding: 20px; }
+
+/* TMB CALCULATOR (en hero) */
+.tmb-widget {
+  background: white;
+  border-radius: 20px;
+  padding: 28px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.1);
+  position: absolute;
+  bottom: -20px;
+  left: -30px;
+  width: 260px;
+}
+.tmb-widget h4 { font-size: 14px; font-weight: 800; color: var(--negro); margin-bottom: 14px; }
+.tmb-input-group { margin-bottom: 10px; }
+.tmb-input-group label { font-size: 10px; font-weight: 700; color: var(--gris-texto); letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-bottom: 4px; }
+.tmb-input-group input, .tmb-input-group select {
+  width: 100%; padding: 8px 12px; border: 1.5px solid #E5E5E5;
+  border-radius: 10px; font-size: 14px; font-family: 'Montserrat', sans-serif;
+  font-weight: 600; color: var(--negro); outline: none; background: var(--blanco-off);
+  transition: border-color 0.2s;
+}
+.tmb-input-group input:focus, .tmb-input-group select:focus { border-color: var(--rojo); }
+.tmb-btn { width: 100%; background: var(--rojo); color: white; border: none; border-radius: 10px; padding: 10px; font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 700; cursor: pointer; margin-top: 6px; transition: background 0.2s; }
+.tmb-btn:hover { background: var(--rojo-oscuro); }
+.tmb-resultado { margin-top: 12px; background: var(--rojo-suave); border-radius: 10px; padding: 12px; text-align: center; display: none; }
+.tmb-resultado .calorias { font-size: 26px; font-weight: 900; color: var(--rojo); display: block; }
+.tmb-resultado small { font-size: 11px; color: var(--gris-texto); }
+
+/* ── PRÓXIMO RETO ── */
+#proximo-reto {
+  background: var(--negro);
+  padding: 48px 24px;
+  text-align: center;
+}
+#proximo-reto .reto-inner { max-width: 800px; margin: 0 auto; }
+#proximo-reto p { color: rgba(255,255,255,0.5); font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600; margin-bottom: 10px; }
+#proximo-reto h3 { color: white; font-size: clamp(22px, 3vw, 32px); font-weight: 900; margin-bottom: 24px; }
+.countdown { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; margin-bottom: 28px; }
+.countdown-box { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 16px 24px; min-width: 80px; }
+.countdown-box .num { font-size: 36px; font-weight: 900; color: var(--rojo); display: block; line-height: 1; }
+.countdown-box .unit { font-size: 11px; color: rgba(255,255,255,0.4); letter-spacing: 0.1em; text-transform: uppercase; }
+
+/* ── TRANSFORMACIÓN ── */
+#transformacion {
+  padding: 100px 24px;
+  background: var(--blanco-off);
+}
+.grid-transformacion { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; max-width: 1100px; margin: 0 auto; }
+.fotos-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.foto-card { border-radius: 20px; aspect-ratio: 3/4; display: flex; align-items: center; justify-content: center; background: #E0E0E0; color: #aaa; font-size: 13px; position: relative; overflow: hidden; }
+.foto-card img { width: 100%; height: 100%; object-fit: cover; }
+.etiqueta-foto { position: absolute; bottom: 12px; left: 12px; background: var(--rojo); color: white; font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 20px; letter-spacing: 0.06em; }
+.texto-transformacion h2 { font-size: clamp(30px, 4vw, 46px); font-weight: 900; margin-bottom: 20px; line-height: 1.15; }
+.texto-transformacion h2 span { color: var(--rojo); }
+.texto-transformacion p { font-size: 16px; color: var(--gris-texto); margin-bottom: 16px; }
+.cita { margin-top: 28px; padding: 20px 24px; border-left: 4px solid var(--rojo); background: white; border-radius: 0 12px 12px 0; font-style: italic; font-size: 15px; color: var(--gris-medio); line-height: 1.7; }
+
+/* ── BENEFICIOS ── */
+#beneficios { padding: 100px 24px; background: var(--negro); }
+#beneficios h2, #beneficios .section-header h2 { color: white; }
+#beneficios .section-header p { color: rgba(255,255,255,0.5); }
+.grid-beneficios { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.05); max-width: 1100px; margin: 0 auto; }
+.beneficio { background: var(--negro); padding: 36px 32px; transition: background 0.2s; }
+.beneficio:hover { background: #1a1a1a; }
+.beneficio .icono { font-size: 28px; margin-bottom: 16px; }
+.beneficio h3 { font-size: 18px; font-weight: 800; color: white; margin-bottom: 10px; }
+.beneficio p { font-size: 14px; color: rgba(255,255,255,0.5); font-weight: 400; line-height: 1.65; }
+
+/* ── CARTA GABO ── */
+#carta-gabo { padding: 100px 24px; background: white; }
+.carta-inner { max-width: 680px; margin: 0 auto; text-align: center; }
+.avatar { width: 80px; height: 80px; border-radius: 50%; background: var(--gris-claro); margin: 0 auto 28px; border: 3px solid var(--rojo); display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 26px; color: var(--rojo); overflow: hidden; }
+.avatar img { width: 100%; height: 100%; object-fit: cover; }
+.carta-inner h2 { font-size: clamp(26px, 4vw, 40px); font-weight: 900; margin-bottom: 32px; line-height: 1.2; }
+.texto-carta { font-size: 18px; color: var(--gris-texto); font-style: italic; line-height: 1.85; text-align: left; border-left: 4px solid var(--rojo); padding-left: 28px; font-weight: 400; }
+.firma { margin-top: 36px; font-size: 22px; font-weight: 900; color: var(--negro); font-style: italic; }
+
+/* ── PRECIOS ── */
+#precios { padding: 100px 24px; background: var(--blanco-off); }
+.spots-badge { display: inline-flex; align-items: center; gap: 8px; background: #FFF3CD; border: 1px solid #F0C040; color: #7A5800; font-size: 12px; font-weight: 700; padding: 8px 18px; border-radius: 40px; margin-bottom: 20px; }
+.grid-precios { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 820px; margin: 0 auto; }
+.tarjeta-precio { background: white; border: 1.5px solid rgba(0,0,0,0.08); border-radius: 20px; padding: 40px 36px; position: relative; transition: transform 0.2s, box-shadow 0.2s; }
+.tarjeta-precio:hover { transform: translateY(-4px); box-shadow: 0 20px 60px rgba(0,0,0,0.08); }
+.tarjeta-precio.destacada { border: 2.5px solid var(--rojo); background: var(--negro); color: white; }
+.precio-badge { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: var(--rojo); color: white; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 18px; border-radius: 40px; white-space: nowrap; }
+.precio-nombre { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--rojo); font-weight: 700; margin-bottom: 16px; }
+.precio-cantidad { font-size: 56px; font-weight: 900; line-height: 1; margin-bottom: 6px; }
+.precio-cantidad small { font-size: 20px; font-weight: 500; }
+.precio-desc { font-size: 14px; color: var(--gris-texto); margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid rgba(0,0,0,0.08); }
+.tarjeta-precio.destacada .precio-desc { color: rgba(255,255,255,0.5); border-bottom-color: rgba(255,255,255,0.1); }
+.lista-precios { list-style: none; margin-bottom: 32px; display: flex; flex-direction: column; gap: 12px; }
+.lista-precios li { font-size: 14px; color: var(--gris-texto); display: flex; align-items: flex-start; gap: 10px; }
+.lista-precios li::before { content: '✓'; color: var(--rojo); font-weight: 900; flex-shrink: 0; }
+.tarjeta-precio.destacada .lista-precios li { color: rgba(255,255,255,0.65); }
+
+/* CTA después de precios */
+.precios-cta { text-align: center; margin-top: 48px; }
+.precios-cta p { font-size: 15px; color: var(--gris-texto); margin-bottom: 24px; }
+
+/* ── TESTIMONIOS ── */
+#testimonios { padding: 100px 24px; background: var(--negro); }
+#testimonios .section-header h2 { color: white; }
+.grid-testimonios { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; max-width: 1100px; margin: 0 auto; }
+.tarjeta-testi { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 32px; }
+.estrellas { color: var(--rojo); font-size: 16px; letter-spacing: 2px; margin-bottom: 16px; }
+.tarjeta-testi p { font-size: 16px; font-style: italic; color: rgba(255,255,255,0.75); font-weight: 400; line-height: 1.7; margin-bottom: 20px; }
+.testi-autor { display: flex; align-items: center; gap: 12px; }
+.testi-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--rojo); display: flex; align-items: center; justify-content: center; font-weight: 900; color: white; font-size: 15px; }
+.testi-nombre { font-weight: 700; color: white; font-size: 14px; }
+.testi-detalle { font-size: 12px; color: rgba(255,255,255,0.35); }
+
+/* ── PROTEÍNA WEEK ── */
+#proteina { padding: 100px 24px; background: var(--blanco-off); }
+.proteina-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; max-width: 1100px; margin: 0 auto; }
+.proteina-visual {
+  background: linear-gradient(145deg, #1a1a1a, #2d2d2d);
+  border-radius: 24px;
+  aspect-ratio: 1;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 40px;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.15);
+  position: relative; overflow: hidden;
+}
+.proteina-visual::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at 70% 30%, rgba(230,57,70,0.15), transparent 60%);
+}
+.proteina-logo-area { text-align: center; position: relative; z-index: 1; }
+.proteina-emoji { font-size: 80px; margin-bottom: 16px; display: block; }
+.proteina-brand { font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.4); font-weight: 600; margin-bottom: 8px; }
+.proteina-nombre { font-size: 26px; font-weight: 900; color: white; line-height: 1.2; text-align: center; margin-bottom: 20px; }
+.proteina-sabores { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+.sabor-tag { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.7); font-size: 11px; font-weight: 600; padding: 5px 12px; border-radius: 20px; letter-spacing: 0.06em; }
+
+.proteina-info h2 { font-size: clamp(28px, 4vw, 42px); font-weight: 900; line-height: 1.15; margin-bottom: 20px; }
+.proteina-info h2 span { color: var(--rejo); }
+.proteina-info p { font-size: 16px; color: var(--gris-texto); line-height: 1.7; margin-bottom: 24px; }
+.proteina-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 32px; }
+.prot-stat { background: white; border-radius: 14px; padding: 20px; border: 1px solid rgba(0,0,0,0.06); text-align: center; }
+.prot-stat .num { font-size: 30px; font-weight: 900; color: var(--rojo); display: block; line-height: 1; margin-bottom: 4px; }
+.prot-stat .lbl { font-size: 11px; color: var(--gris-texto); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+.proteina-sabores-lista { margin-bottom: 28px; }
+.proteina-sabores-lista h4 { font-size: 13px; font-weight: 700; color: var(--negro); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px; }
+.sabores-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+.sabor-chip { display: flex; align-items: center; gap: 6px; background: white; border: 1.5px solid rgba(0,0,0,0.1); border-radius: 20px; padding: 7px 14px; font-size: 13px; font-weight: 600; color: var(--negro); }
+
+/* ── FAQ ── */
+#faq { padding: 100px 24px; background: white; }
+.faq-list { max-width: 720px; margin: 0 auto; }
+.faq-item { border-bottom: 1px solid rgba(0,0,0,0.08); }
+.faq-pregunta { width: 100%; background: none; border: none; text-align: left; padding: 22px 0; font-size: 17px; font-weight: 700; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-family: 'Montserrat', sans-serif; color: var(--negro); gap: 20px; }
+.faq-pregunta:hover { color: var(--rojo); }
+.faq-icon { width: 28px; height: 28px; border: 1.5px solid rgba(0,0,0,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: transform 0.3s, border-color 0.2s; font-size: 16px; color: var(--gris-texto); }
+.faq-item.abierto .faq-icon { transform: rotate(45deg); border-color: var(--rojo); color: var(--rojo); }
+.faq-respuesta { max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.2s; }
+.faq-item.abierto .faq-respuesta { max-height: 200px; padding-bottom: 22px; }
+.faq-respuesta p { font-size: 15px; color: var(--gris-texto); line-height: 1.7; }
+
+/* ── FORMULARIO ── */
+#formulario {
+  padding: 100px 24px;
+  background: linear-gradient(135deg, var(--negro) 0%, #1A1A1A 100%);
+  position: relative; overflow: hidden;
+}
+#formulario::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 50% 60% at 50% 100%, rgba(230,57,70,0.08), transparent 70%);
+  pointer-events: none;
+}
+.formulario-inner { max-width: 540px; margin: 0 auto; text-align: center; position: relative; z-index: 1; }
+.formulario-inner h2 { font-size: clamp(28px, 4vw, 48px); font-weight: 900; color: white; margin-bottom: 14px; line-height: 1.15; }
+.formulario-inner > p { font-size: 16px; color: rgba(255,255,255,0.5); margin-bottom: 48px; }
+.form-fields { text-align: left; display: flex; flex-direction: column; gap: 14px; }
+.form-group label { display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 6px; }
+.form-group input {
+  width: 100%; padding: 15px 20px; border-radius: 50px;
+  border: 1.5px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.06);
+  color: white; font-size: 15px; font-family: 'Montserrat', sans-serif;
+  outline: none; transition: border-color 0.2s;
+}
+.form-group input::placeholder { color: rgba(255,255,255,0.2); }
+.form-group input:focus { border-color: var(--rojo); }
+.btn-wa { width: 100%; margin-top: 8px; background: var(--rojo); color: white; border: none; border-radius: 50px; padding: 18px; font-family: 'Montserrat', sans-serif; font-size: 16px; font-weight: 800; cursor: pointer; transition: all 0.25s; letter-spacing: 0.02em; }
+.btn-wa:hover { background: var(--rojo-oscuro); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(230,57,70,0.4); }
+.form-nota { margin-top: 18px; font-size: 12px; color: rgba(255,255,255,0.25); line-height: 1.6; }
+
+/* ── FOOTER ── */
+footer { background: var(--negro); padding: 48px 24px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); }
+.footer-logo { font-size: 22px; font-weight: 900; color: white; margin-bottom: 8px; }
+.footer-logo span { color: var(--rojo); }
+footer p { font-size: 13px; color: rgba(255,255,255,0.2); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .hero-foto { display: none; }
+  .grid-transformacion { grid-template-columns: 1fr; }
+  .grid-precios { grid-template-columns: 1fr; }
+  .proteina-grid { grid-template-columns: 1fr; }
+  .nav-links { display: none; }
+  .nav-mobile-toggle { display: block; }
+}
+@media (max-width: 600px) {
+  .hero-buttons .btn-outline { display: none; }
+  .tmb-widget { position: static; width: 100%; margin-top: 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <div class="nav-logo">DOCE<span>WEEKS</span></div>
+  <ul class="nav-links">
+    <li><a href="#transformacion">Historia</a></li>
+    <li><a href="#precios">Precios</a></li>
+    <li><a href="#proteina">Proteína Week</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <a href="#formulario" class="nav-cta">Aparta tu cupo →</a>
+  <button class="nav-mobile-toggle" onclick="document.querySelector('.nav-links').style.display = document.querySelector('.nav-links').style.display === 'flex' ? 'none' : 'flex'; document.querySelector('.nav-links').style.flexDirection='column'; document.querySelector('.nav-links').style.position='absolute'; document.querySelector('.nav-links').style.top='64px'; document.querySelector('.nav-links').style.left='0'; document.querySelector('.nav-links').style.right='0'; document.querySelector('.nav-links').style.background='white'; document.querySelector('.nav-links').style.padding='24px'; document.querySelector('.nav-links').style.boxShadow='0 8px 24px rgba(0,0,0,0.1)';">☰</button>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="hero-grid">
+    <div class="hero-text reveal">
+      <div class="hero-badge"><div class="dot"></div> MÉTODO REAL · 110KG → 77KG</div>
+      <h1>Bienvenido a<br><span class="rojo">DOCE WEEKS</span></h1>
+      <p>El programa de 12 semanas que cambió mi vida. Rutinas adaptadas, acompañamiento real y una guía semana a semana. No es una dieta. Es un método.</p>
+      <div class="hero-buttons">
+        <a href="#formulario" class="btn btn-rojo btn-grande">🔥 Quiero mi cupo</a>
+        <a href="#transformacion" class="btn btn-outline">Ver transformación</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><span class="numero">33kg</span><span class="label">perdidos por Gabo</span></div>
+        <div class="stat"><span class="numero">12</span><span class="label">semanas de método</span></div>
+        <div class="stat"><span class="numero">10</span><span class="label">cupos por ciclo</span></div>
+      </div>
+    </div>
+
+    <div style="position:relative;" class="reveal" style="transition-delay:0.15s">
+      <div class="hero-foto">
+        <div class="hero-foto-placeholder">
+          📸 Reemplaza con<br><strong>gabo-principal.jpg</strong>
+        </div>
+        <!-- Para usar tu foto: <img src="gabo-principal.jpg" alt="Gabo Blanco"> -->
+      </div>
+
+      <!-- CALCULADORA TMB -->
+      <div class="tmb-widget">
+        <h4>🔥 Calcula tu TMB</h4>
+        <div class="tmb-input-group">
+          <label>Peso (kg)</label>
+          <input type="number" id="tmb-peso" placeholder="75">
+        </div>
+        <div class="tmb-input-group">
+          <label>Altura (cm)</label>
+          <input type="number" id="tmb-altura" placeholder="170">
+        </div>
+        <div class="tmb-input-group">
+          <label>Edad</label>
+          <input type="number" id="tmb-edad" placeholder="28">
+        </div>
+        <div class="tmb-input-group">
+          <label>Sexo</label>
+          <select id="tmb-sexo">
+            <option value="hombre">Hombre</option>
+            <option value="mujer">Mujer</option>
+          </select>
+        </div>
+        <button class="tmb-btn" onclick="calcularTMB()">Calcular mis calorías</button>
+        <div class="tmb-resultado" id="tmb-resultado">
+          <small>Necesitas aprox.</small>
+          <span class="calorias" id="tmb-valor">—</span>
+          <small>kcal/día · <a href="#formulario" style="color:var(--rojo);font-weight:700;">Gabo te regala tu plan →</a></small>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PRÓXIMO RETO ── -->
+<section id="proximo-reto">
+  <div class="reto-inner reveal">
+    <p>📅 Próximo ciclo</p>
+    <h3>El próximo reto DOCE WEEKS comienza el <span id="fecha-reto" style="color:var(--rojo);">—</span></h3>
+    <div class="countdown">
+      <div class="countdown-box"><span class="num" id="cd-dias">00</span><span class="unit">Días</span></div>
+      <div class="countdown-box"><span class="num" id="cd-horas">00</span><span class="unit">Horas</span></div>
+      <div class="countdown-box"><span class="num" id="cd-min">00</span><span class="unit">Min</span></div>
+      <div class="countdown-box"><span class="num" id="cd-seg">00</span><span class="unit">Seg</span></div>
+    </div>
+    <p style="font-size:14px; margin-bottom:0;">⚠️ Recuerda: solo <strong style="color:white">10 cupos</strong> por ciclo. Una vez llenos, lista de espera.</p>
+  </div>
+</section>
+
+<!-- ── TRANSFORMACIÓN ── -->
+<section id="transformacion">
+  <div class="container">
+    <div class="grid-transformacion">
+      <div class="fotos-grid reveal">
+        <div class="foto-card">
+          📸 gabo-antes.jpg
+          <div class="etiqueta-foto">ANTES · 110kg</div>
+        </div>
+        <div class="foto-card">
+          💪 gabo-despues.jpg
+          <div class="etiqueta-foto">DESPUÉS · 77kg</div>
+        </div>
+      </div>
+      <div class="texto-transformacion reveal" style="transition-delay:0.15s">
+        <div class="tag">La historia real</div>
+        <h2>De 110kg a <span>77kg</span>.<br>Sin magia. Con método.</h2>
+        <p>No fue una dieta de moda. Fue un método construido desde la experiencia propia, semana a semana, hábito por hábito.</p>
+        <p>Lo que cambió no fue solo el cuerpo. Cambió todo.</p>
+        <div class="cita">"Pasé de no tener confianza a ser mi mayor admirador. Esto no solo cambió mi salud, cambió mi relación con la vida, con los demás y hasta con el dinero." <br>— <strong>Gabo Blanco</strong></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── BENEFICIOS ── -->
+<section id="beneficios">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="tag">Lo que incluye</div>
+      <h2>Todo lo que necesitas.<br>Nada que sobre.</h2>
+      <p>Diseñado para que no abandones. Cada elemento existe por una razón.</p>
+    </div>
+    <div class="grid-beneficios">
+      <div class="beneficio reveal"><div class="icono">📅</div><h3>Guía semanal</h3><p>Semanas 1 a 4 listas. Hábitos progresivos, sin abrumarte de golpe.</p></div>
+      <div class="beneficio reveal" style="transition-delay:0.05s"><div class="icono">🏋️</div><h3>Rutinas personalizadas</h3><p>DoceMens y Doce Women, adaptadas a tu nivel y objetivo real.</p></div>
+      <div class="beneficio reveal" style="transition-delay:0.1s"><div class="icono">📊</div><h3>Reportes semanales</h3><p>Seguimiento de entrenos, pasos y alimentación sin obsesionarte con la báscula.</p></div>
+      <div class="beneficio reveal" style="transition-delay:0.05s"><div class="icono">💬</div><h3>Acompañamiento WhatsApp</h3><p>Respuesta directa de Gabo. No eres un número. No es un bot.</p></div>
+      <div class="beneficio reveal" style="transition-delay:0.1s"><div class="icono">👥</div><h3>Comunidad activa</h3><p>Grupo de personas que están exactamente en el mismo camino.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CARTA GABO ── -->
+<section id="carta-gabo">
+  <div class="carta-inner reveal">
+    <div class="avatar">G
+      <!-- Para tu foto: <img src="gabo-avatar.jpg" alt="Gabo"> -->
+    </div>
+    <div class="tag">Una palabra de Gabo</div>
+    <h2>Hola, soy Gabo.<br>Y me alegra que estés aquí.</h2>
+    <p class="texto-carta">Doce Weeks no solo es un reto. Es un lugar para crecer. Para dejar atrás lo que antes pesaba y volvernos coherentes con nuestra realidad. Si estás aquí es porque la vida, Dios o en lo que creas te ha puesto en el camino que merece tu cuerpo, tu vida y tu futuro. Espero que disfrutemos estas doce semanas y te lleven a la versión más increíble de tu ser.</p>
+    <div class="firma">— Gabo Blanco</div>
+  </div>
+</section>
+
+<!-- ── PRECIOS ── -->
+<section id="precios">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="spots-badge">🔴 Solo 10 cupos disponibles este ciclo</div>
+      <h2>Elige tu forma de entrar</h2>
+      <p>Dos opciones. Sin letra pequeña. Sin sorpresas.</p>
+    </div>
+    <div class="grid-precios reveal" style="transition-delay:0.1s">
+      <div class="tarjeta-precio">
+        <div class="precio-nombre">Pago mensual</div>
+        <div class="precio-cantidad">$40<small>/mes</small></div>
+        <div class="precio-desc">3 pagos · Total $120 · Pagas mes a mes</div>
+        <ul class="lista-precios">
+          <li>Acceso completo al programa</li>
+          <li>Rutina personalizada (DoceMens / Doce Women)</li>
+          <li>Guía semanal progresiva</li>
+          <li>Reportes de seguimiento</li>
+          <li>Acompañamiento WhatsApp con Gabo</li>
+          <li>Comunidad de clientes activos</li>
+        </ul>
+        <a href="#formulario" class="btn btn-outline" style="display:block;text-align:center;">Elegir este plan</a>
+      </div>
+      <div class="tarjeta-precio destacada">
+        <div class="precio-badge">⭐ Recomendado · Ahorra $20</div>
+        <div class="precio-nombre">Pago único</div>
+        <div class="precio-cantidad" style="color:white">$100<small style="color:rgba(255,255,255,0.5)">/único</small></div>
+        <div class="precio-desc">12 semanas completas · La opción de quienes van en serio</div>
+        <ul class="lista-precios">
+          <li>Todo lo del plan mensual</li>
+          <li>Acceso inmediato a las 12 semanas</li>
+          <li>Prioridad en respuesta de Gabo</li>
+          <li>Ahorro real de $20 desde el inicio</li>
+          <li>Sin preocuparte por pagos mensuales</li>
+        </ul>
+        <a href="#formulario" class="btn btn-rojo" style="display:block;text-align:center;">Elegir este plan</a>
+      </div>
+    </div>
+
+    <!-- CTA DESPUÉS DE PRECIOS -->
+    <div class="precios-cta reveal" style="transition-delay:0.2s">
+      <p>¿Tienes dudas sobre cuál elegir? Escríbele a Gabo y él te ayuda a decidir.</p>
+      <a href="#formulario" class="btn btn-negro btn-grande">📲 Aparta mi cupo ahora →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIOS ── -->
+<section id="testimonios">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="tag-outline" style="border-color:rgba(255,255,255,0.3); color:rgba(255,255,255,0.5);">Lo que dicen</div>
+      <h2 style="color:white;">Resultados reales</h2>
+    </div>
+    <div class="grid-testimonios">
+      <div class="tarjeta-testi reveal">
+        <div class="estrellas">★★★★★</div>
+        <p>"La mejor decisión que tomé. No solo cambié físicamente, cambié mi mentalidad entera."</p>
+        <div class="testi-autor"><div class="testi-avatar">V</div><div><div class="testi-nombre">Valery</div><div class="testi-detalle">Cliente Doce Weeks</div></div></div>
+      </div>
+      <div class="tarjeta-testi reveal" style="transition-delay:0.1s">
+        <div class="estrellas">★★★★★</div>
+        <p>"No sabía que podía lograrlo. El acompañamiento de Gabo hace toda la diferencia. Sientes que alguien de verdad está contigo."</p>
+        <div class="testi-autor"><div class="testi-avatar">Y</div><div><div class="testi-nombre">Yorgelis</div><div class="testi-detalle">Cliente Doce Weeks</div></div></div>
+      </div>
+      <div class="tarjeta-testi reveal" style="transition-delay:0.2s">
+        <div class="estrellas">★★★★★</div>
+        <p>"Semana a semana, un hábito a la vez. Eso sí funciona de verdad. No te sientes abrumado en ningún momento."</p>
+        <div class="testi-autor"><div class="testi-avatar">W</div><div><div class="testi-nombre">Wilson</div><div class="testi-detalle">Cliente Doce Weeks</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PROTEÍNA WEEK ── -->
+<section id="proteina">
+  <div class="container">
+    <div class="proteina-grid">
+      <div class="proteina-visual reveal">
+        <div class="proteina-logo-area">
+          <span class="proteina-emoji">🚀</span>
+          <div class="proteina-brand">Nutrition10K · by Gabo</div>
+          <div class="proteina-nombre">WHEY PROTEIN<br>SPACE EDITION</div>
+          <div class="proteina-sabores">
+            <span class="sabor-tag">🍦 Vainilla</span>
+            <span class="sabor-tag">🍫 Chocolate</span>
+            <span class="sabor-tag">🍪 Cookies & Cream</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="proteina-info reveal" style="transition-delay:0.15s">
+        <div class="tag">Proteína Week</div>
+        <h2>Combustible para tu<br><span style="color:var(--rojo)">transformación</span></h2>
+        <p>La proteína que uso y recomiendo. Whey de alta calidad, 25g de proteína pura por servicio. Diseñada para atletas y personas que van en serio.</p>
+
+        <div class="proteina-stats">
+          <div class="prot-stat"><span class="num">25g</span><span class="lbl">Proteína/servicio</span></div>
+          <div class="prot-stat"><span class="num">28</span><span class="lbl">Servicios/envase</span></div>
+          <div class="prot-stat"><span class="num">USA</span><span class="lbl">Formulado en</span></div>
+          <div class="prot-stat"><span class="num">3</span><span class="lbl">Sabores</span></div>
+        </div>
+
+        <div class="proteina-sabores-lista">
+          <h4>Sabores disponibles</h4>
+          <div class="sabores-chips">
+            <div class="sabor-chip">🍦 Vainilla</div>
+            <div class="sabor-chip">🍫 Chocolate</div>
+            <div class="sabor-chip">🍪 Cookies & Cream</div>
+          </div>
+        </div>
+
+        <a href="#formulario" class="btn btn-rojo">Consultar disponibilidad →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FAQ ── -->
+<section id="faq">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="tag">Preguntas frecuentes</div>
+      <h2>Lo que siempre preguntan</h2>
+    </div>
+    <div class="faq-list reveal">
+      <div class="faq-item">
+        <button class="faq-pregunta">¿Necesito experiencia en el gimnasio? <span class="faq-icon">+</span></button>
+        <div class="faq-respuesta"><p>No. Las rutinas se adaptan a tu nivel actual, ya seas principiante o intermedio. Empezamos desde donde estás tú.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-pregunta">¿Cómo es el acompañamiento? <span class="faq-icon">+</span></button>
+        <div class="faq-respuesta"><p>Cada semana envías tu reporte (entrenamiento, pasos, alimentación) y Gabo te responde directamente por WhatsApp. No es un bot, es Gabo.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-pregunta">¿Puedo pagar mensual? <span class="faq-icon">+</span></button>
+        <div class="faq-respuesta"><p>Sí. $40 al mes (3 pagos = $120) o $100 pago único por las 12 semanas completas. Con el único ahorras $20.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-pregunta">¿Qué pasa si no entreno un día? <span class="faq-icon">+</span></button>
+        <div class="faq-respuesta"><p>No pasa nada. La constancia se mide semana a semana, no día a día. La vida interrumpe, y eso está contemplado en el método.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-pregunta">¿Los 10 cupos son reales? <span class="faq-icon">+</span></button>
+        <div class="faq-respuesta"><p>Sí, es escasez real. El acompañamiento es personalizado y Gabo responde directamente. Si hubiera 100 personas, la calidad caería. Por eso solo 10 por ciclo.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-pregunta">¿También venden proteína? <span class="faq-icon">+</span></button>
+        <div class="faq-respuesta"><p>Sí. Gabo revende la Whey Protein Space Edition de Nutrition10K. 25g de proteína por servicio, 28 servicios, en sabores Vainilla, Chocolate y Cookies & Cream. Consulta disponibilidad por WhatsApp.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FORMULARIO ── -->
+<section id="formulario">
+  <div class="formulario-inner">
+    <div class="tag reveal">Últimos cupos</div>
+    <h2 class="reveal" style="transition-delay:0.1s">¿Listo para las<br><span style="color:var(--rojo)">doce semanas</span>?</h2>
+    <p class="reveal" style="transition-delay:0.2s">Completa tus datos y Gabo te contacta por WhatsApp para confirmar tu cupo.</p>
+
+    <form class="form-fields reveal" style="transition-delay:0.3s" onsubmit="enviarWhatsApp(event)">
+      <div class="form-group">
+        <label>Nombre completo</label>
+        <input type="text" id="nombre" placeholder="Tu nombre completo" required>
+      </div>
+      <div class="form-group">
+        <label>Correo electrónico</label>
+        <input type="email" id="email" placeholder="tu@correo.com" required>
+      </div>
+      <div class="form-group">
+        <label>Número de WhatsApp</label>
+        <input type="tel" id="wa-numero" placeholder="+58 412 000 0000" required>
+      </div>
+      <div class="form-group">
+        <label>Peso actual (kg) — opcional</label>
+        <input type="number" id="peso-form" placeholder="Ej: 85">
+      </div>
+      <button type="submit" class="btn-wa">📲 Aparta mi cupo en WhatsApp</button>
+      <p class="form-nota">Al enviar, se abrirá WhatsApp con un mensaje para Gabo. Solo 10 cupos por ciclo — reserva el tuyo ahora.</p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">DOCE<span>WEEKS</span></div>
+  <p>© 2026 Doce Weeks · Creado por Gabo Blanco · Transformación real, método real.</p>
+</footer>
+
+<script>
+// ── SCROLL REVEAL ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ── FAQ ──
+document.querySelectorAll('.faq-pregunta').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.parentElement;
+    const open = item.classList.contains('abierto');
+    document.querySelectorAll('.faq-item.abierto').forEach(i => i.classList.remove('abierto'));
+    if (!open) item.classList.add('abierto');
+  });
+});
+
+// ── TMB CALCULATOR ──
+function calcularTMB() {
+  const peso = parseFloat(document.getElementById('tmb-peso').value);
+  const altura = parseFloat(document.getElementById('tmb-altura').value);
+  const edad = parseFloat(document.getElementById('tmb-edad').value);
+  const sexo = document.getElementById('tmb-sexo').value;
+  if (!peso || !altura || !edad) { alert('Completa todos los campos'); return; }
+  let tmb;
+  if (sexo === 'hombre') {
+    tmb = 10 * peso + 6.25 * altura - 5 * edad + 5;
+  } else {
+    tmb = 10 * peso + 6.25 * altura - 5 * edad - 161;
+  }
+  const mantenimiento = Math.round(tmb * 1.55);
+  const res = document.getElementById('tmb-resultado');
+  document.getElementById('tmb-valor').textContent = mantenimiento + ' kcal';
+  res.style.display = 'block';
+}
+
+// ── COUNTDOWN (cambia la fecha aquí) ──
+// ⚠️ CAMBIA ESTA FECHA por la del próximo reto
+const fechaReto = new Date('2025-07-07T00:00:00');
+
+function actualizarCountdown() {
+  const ahora = new Date();
+  const diff = fechaReto - ahora;
+  if (diff <= 0) {
+    document.getElementById('fecha-reto').textContent = '¡Ya comenzó!';
+    document.querySelector('.countdown').style.display = 'none';
+    return;
+  }
+  const dias = Math.floor(diff / (1000*60*60*24));
+  const horas = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+  const min = Math.floor((diff % (1000*60*60)) / (1000*60));
+  const seg = Math.floor((diff % (1000*60)) / 1000);
+  document.getElementById('cd-dias').textContent = String(dias).padStart(2,'0');
+  document.getElementById('cd-horas').textContent = String(horas).padStart(2,'0');
+  document.getElementById('cd-min').textContent = String(min).padStart(2,'0');
+  document.getElementById('cd-seg').textContent = String(seg).padStart(2,'0');
+  const opciones = { day:'numeric', month:'long', year:'numeric' };
+  document.getElementById('fecha-reto').textContent = fechaReto.toLocaleDateString('es-ES', opciones);
+}
+setInterval(actualizarCountdown, 1000);
+actualizarCountdown();
+
+// ── WHATSAPP FORM ──
+function enviarWhatsApp(e) {
+  e.preventDefault();
+  const nombre = document.getElementById('nombre').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const wa = document.getElementById('wa-numero').value.trim();
+  const peso = document.getElementById('peso-form').value.trim();
+
+  // ⚠️ REEMPLAZA con tu número real (código país + número, sin +)
+  // Venezuela ejemplo: 584121234567
+  const tuNumero = 'TU_NUMERO_WHATSAPP';
+
+  let mensaje = `Hola Gabo, vi tu landing page y quiero apartar mi cupo para Doce Weeks.\n\n`;
+  mensaje += `📌 Mi nombre es: ${nombre}\n`;
+  mensaje += `📧 Mi correo es: ${email}\n`;
+  mensaje += `📱 Mi WhatsApp es: ${wa}\n`;
+  if (peso) mensaje += `⚖️ Mi peso actual: ${peso}kg\n`;
+  mensaje += `\n¡Quiero empezar!`;
+
+  window.open(`https://wa.me/${tuNumero}?text=${encodeURIComponent(mensaje)}`, '_blank');
+}
+</script>
+</body>
+</html>
