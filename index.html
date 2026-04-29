@@ -331,7 +331,7 @@ footer p { font-size: 13px; color: rgba(255,255,255,0.2); }
   <div class="nav-logo">DOCE<span>WEEKS</span></div>
   <ul class="nav-links">
     <li><a href="#transformacion">Historia</a></li>
-    <li><a href="#precios">Precios</a></li>
+    <li><a href="#calculadora">Precios</a></li>
     <li><a href="#proteina">Proteína Week</a></li>
     <li><a href="#faq">FAQ</a></li>
   </ul>
@@ -729,6 +729,17 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
+// ── NAV (cierra menú móvil al navegar) ──
+const navLinks = document.querySelector('.nav-links');
+const mobileClose = () => {
+  if (!navLinks) return;
+  const isMobile = window.matchMedia('(max-width: 900px)').matches;
+  if (isMobile) navLinks.style.display = 'none';
+};
+document.querySelectorAll('.nav-links a[href^="#"]').forEach(a => {
+  a.addEventListener('click', mobileClose);
+});
+
 // ── FAQ ──
 document.querySelectorAll('.faq-pregunta').forEach(btn => {
   btn.addEventListener('click', () => {
@@ -806,15 +817,43 @@ function enviarInscripcion() {
   const nombre = document.getElementById('f-nombre').value.trim();
   const email = document.getElementById('f-email').value.trim();
   const wa = document.getElementById('f-wa').value.trim();
-  if (!nombre || !email || !wa) { alert('Completa todos los campos'); return; }
 
-  const mensaje =
-    `Hola Doce Weeks, elegí el siguiente plan: ${planElegido}. ` +
-    `Mis datos son: Nombre: ${nombre}, Correo: ${email}, WhatsApp: ${wa}, ` +
-    `Peso: ${datosCalculadora.peso || '—'}kg, Edad: ${datosCalculadora.edad || '—'}, ` +
-    `Altura: ${datosCalculadora.altura || '—'}cm, Objetivo: ${datosCalculadora.objetivos || '—'}`;
+  if (!planElegido) {
+    alert('Primero elige un plan para continuar.');
+    return;
+  }
 
-  window.open(`https://wa.link/8hm66g?text=${encodeURIComponent(mensaje)}`, '_blank');
+  if (!nombre || !email || !wa) {
+    alert('Completa todos los campos del formulario.');
+    return;
+  }
+
+  const peso = datosCalculadora.peso ?? '—';
+  const altura = datosCalculadora.altura ?? '—';
+  const edad = datosCalculadora.edad ?? '—';
+  const objetivos = datosCalculadora.objetivos || '—';
+
+  const lineasMensaje = [
+    'Hola Doce Weeks 👋',
+    '',
+    `*Mi nombre es:* ${nombre}`,
+    `*Mi estado físico es:* ${planElegido}`,
+    '',
+    '*Datos del usuario:*',
+    `- Email: ${email}`,
+    `- WhatsApp: ${wa}`,
+    '',
+    '*Resultados de la calculadora:*',
+    `- Peso: ${peso} kg`,
+    `- Altura: ${altura} cm`,
+    `- Edad: ${edad}`,
+    `- Objetivos: ${objetivos}`,
+  ];
+
+  const mensaje = lineasMensaje.join('\n');
+  const numeroWhatsApp = '584168155236';
+  const whatsappUrl = `https://api.whatsapp.com/send/?phone=${numeroWhatsApp}&text=${encodeURIComponent(mensaje)}`;
+  window.open(whatsappUrl, '_blank');
 }
 
 // ── COUNTDOWN ──
