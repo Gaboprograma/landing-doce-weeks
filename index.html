@@ -112,13 +112,105 @@ nav {
 /* ── BENEFICIOS ── */
 #beneficios { padding: 100px 24px; background: var(--negro); }
 #beneficios .section-header h2 { color: white; }
-#beneficios .section-header p { color: rgba(255,255,255,0.5); }
-.grid-beneficios { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.05); max-width: 1100px; margin: 0 auto; }
-.beneficio { background: var(--negro); padding: 36px 32px; transition: background 0.2s; }
-.beneficio:hover { background: #1a1a1a; }
-.beneficio .icono { font-size: 28px; margin-bottom: 16px; }
-.beneficio h3 { font-size: 18px; font-weight: 800; color: white; margin-bottom: 10px; }
-.beneficio p { font-size: 14px; color: rgba(255,255,255,0.5); font-weight: 400; line-height: 1.65; }
+#beneficios .section-header p { color: rgba(255,255,255,0.62); }
+.grid-beneficios {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 22px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.beneficio {
+  perspective: 1400px;
+  min-height: 280px;
+}
+.beneficio-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 280px;
+  transform-style: preserve-3d;
+  transition: transform 0.7s ease;
+}
+.beneficio:hover .beneficio-inner,
+.beneficio:focus-within .beneficio-inner {
+  transform: rotateY(180deg);
+}
+.beneficio-face {
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 28px 24px;
+  border: 1px solid rgba(252,212,211,0.18);
+  box-shadow: 0 18px 42px rgba(0,0,0,0.22);
+}
+.beneficio-front {
+  background:
+    radial-gradient(circle at top right, rgba(252,212,211,0.22), transparent 42%),
+    linear-gradient(160deg, #181818 0%, #101010 100%);
+}
+.beneficio-back {
+  background:
+    linear-gradient(160deg, rgba(252,212,211,0.18), rgba(252,212,211,0.05)),
+    #181818;
+  transform: rotateY(180deg);
+}
+.beneficio-topline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #fcd4d3;
+  font-weight: 700;
+}
+.beneficio-topline::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #fcd4d3;
+  box-shadow: 0 0 18px rgba(252,212,211,0.55);
+}
+.beneficio .icono {
+  font-size: 34px;
+  width: 64px;
+  height: 64px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 18px;
+  background: rgba(252,212,211,0.12);
+  border: 1px solid rgba(252,212,211,0.22);
+  margin-bottom: 18px;
+}
+.beneficio h3 {
+  font-size: 22px;
+  font-weight: 800;
+  color: white;
+  margin-bottom: 10px;
+  line-height: 1.2;
+}
+.beneficio p {
+  font-size: 16px;
+  color: rgba(255,255,255,0.82);
+  font-weight: 500;
+  line-height: 1.7;
+}
+.beneficio-hover-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(252,212,211,0.75);
+}
 .beneficios-cta { text-align: center; margin-top: 48px; }
 
 /* ── VIAJE 12 SEMANAS ── */
@@ -342,6 +434,7 @@ footer p { font-size: 13px; color: rgba(255,255,255,0.2); }
   .grid-transformacion { grid-template-columns: 1fr; }
   .grid-precios-3 { grid-template-columns: 1fr; }
   .proteina-grid { grid-template-columns: 1fr; }
+  .grid-beneficios { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
   .nav-links { display: none; }
   .nav-mobile-toggle { display: block; }
 }
@@ -354,6 +447,16 @@ footer p { font-size: 13px; color: rgba(255,255,255,0.2); }
 }
 @media (max-width: 600px) {
   .hero-buttons .btn-outline { display: none; }
+  .beneficio,
+  .beneficio-inner { min-height: auto; }
+  .beneficio-inner { transform: none !important; }
+  .beneficio-face {
+    position: relative;
+    inset: auto;
+    min-height: auto;
+  }
+  .beneficio-front { margin-bottom: 14px; }
+  .beneficio-back { transform: none; }
 }
 </style>
 </head>
@@ -447,11 +550,91 @@ footer p { font-size: 13px; color: rgba(255,255,255,0.2); }
       <p>Diseñado para que no abandones. Cada elemento existe por una razón.</p>
     </div>
     <div class="grid-beneficios">
-      <div class="beneficio reveal"><div class="icono">📅</div><h3>Guía semanal</h3><p>Semanas 1 a 4 listas. Hábitos progresivos, sin abrumarte de golpe.</p></div>
-      <div class="beneficio reveal" style="transition-delay:0.05s"><div class="icono">🏋️</div><h3>Rutinas personalizadas</h3><p>DoceMens y Doce Women, adaptadas a tu nivel y objetivo real.</p></div>
-      <div class="beneficio reveal" style="transition-delay:0.1s"><div class="icono">📊</div><h3>Reportes semanales</h3><p>Seguimiento de entrenos, pasos y alimentación sin obsesionarte con la báscula.</p></div>
-      <div class="beneficio reveal" style="transition-delay:0.05s"><div class="icono">💬</div><h3>Acompañamiento WhatsApp</h3><p>Respuesta directa de Gabo. No eres un número. No es un bot.</p></div>
-      <div class="beneficio reveal" style="transition-delay:0.1s"><div class="icono">👥</div><h3>Comunidad activa</h3><p>Grupo de personas que están exactamente en el mismo camino.</p></div>
+      <div class="beneficio reveal">
+        <div class="beneficio-inner">
+          <div class="beneficio-face beneficio-front">
+            <div>
+              <div class="beneficio-topline">Incluye</div>
+              <div class="icono">📅</div>
+              <h3>Guía semanal</h3>
+            </div>
+            <div class="beneficio-hover-label">Pasa el mouse para ver más</div>
+          </div>
+          <div class="beneficio-face beneficio-back">
+            <div class="beneficio-topline">Detalle</div>
+            <h3>Guía semanal</h3>
+            <p>Semanas 1 a 4 listas. Hábitos progresivos, sin abrumarte de golpe.</p>
+          </div>
+        </div>
+      </div>
+      <div class="beneficio reveal" style="transition-delay:0.05s">
+        <div class="beneficio-inner">
+          <div class="beneficio-face beneficio-front">
+            <div>
+              <div class="beneficio-topline">Incluye</div>
+              <div class="icono">🏋️</div>
+              <h3>Rutinas personalizadas</h3>
+            </div>
+            <div class="beneficio-hover-label">Pasa el mouse para ver más</div>
+          </div>
+          <div class="beneficio-face beneficio-back">
+            <div class="beneficio-topline">Detalle</div>
+            <h3>Rutinas personalizadas</h3>
+            <p>DoceMens y Doce Women, adaptadas a tu nivel y objetivo real.</p>
+          </div>
+        </div>
+      </div>
+      <div class="beneficio reveal" style="transition-delay:0.1s">
+        <div class="beneficio-inner">
+          <div class="beneficio-face beneficio-front">
+            <div>
+              <div class="beneficio-topline">Incluye</div>
+              <div class="icono">📊</div>
+              <h3>Reportes semanales</h3>
+            </div>
+            <div class="beneficio-hover-label">Pasa el mouse para ver más</div>
+          </div>
+          <div class="beneficio-face beneficio-back">
+            <div class="beneficio-topline">Detalle</div>
+            <h3>Reportes semanales</h3>
+            <p>Seguimiento de entrenos, pasos y alimentación sin obsesionarte con la báscula.</p>
+          </div>
+        </div>
+      </div>
+      <div class="beneficio reveal" style="transition-delay:0.05s">
+        <div class="beneficio-inner">
+          <div class="beneficio-face beneficio-front">
+            <div>
+              <div class="beneficio-topline">Incluye</div>
+              <div class="icono">💬</div>
+              <h3>Acompañamiento WhatsApp</h3>
+            </div>
+            <div class="beneficio-hover-label">Pasa el mouse para ver más</div>
+          </div>
+          <div class="beneficio-face beneficio-back">
+            <div class="beneficio-topline">Detalle</div>
+            <h3>Acompañamiento WhatsApp</h3>
+            <p>Respuesta directa de Gabo. No eres un número. No es un bot.</p>
+          </div>
+        </div>
+      </div>
+      <div class="beneficio reveal" style="transition-delay:0.1s">
+        <div class="beneficio-inner">
+          <div class="beneficio-face beneficio-front">
+            <div>
+              <div class="beneficio-topline">Incluye</div>
+              <div class="icono">👥</div>
+              <h3>Comunidad activa</h3>
+            </div>
+            <div class="beneficio-hover-label">Pasa el mouse para ver más</div>
+          </div>
+          <div class="beneficio-face beneficio-back">
+            <div class="beneficio-topline">Detalle</div>
+            <h3>Comunidad activa</h3>
+            <p>Grupo de personas que están exactamente en el mismo camino.</p>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="beneficios-cta reveal" style="transition-delay:0.15s">
       <a href="#viaje" class="btn btn-rojo" style="margin-top:48px; display:inline-block;">📖 Ver el viaje completo →</a>
