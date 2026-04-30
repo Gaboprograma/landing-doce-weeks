@@ -238,7 +238,7 @@ nav {
 .sabor-tag { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.7); font-size: 11px; font-weight: 600; padding: 5px 12px; border-radius: 20px; letter-spacing: 0.06em; }
 
 .proteina-info h2 { font-size: clamp(28px, 4vw, 42px); font-weight: 900; line-height: 1.15; margin-bottom: 20px; }
-.proteina-info h2 span { color: var(--rejo); }
+.proteina-info h2 span { color: var(--rojo); }
 .proteina-info p { font-size: 16px; color: var(--gris-texto); line-height: 1.7; margin-bottom: 24px; }
 .proteina-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 32px; }
 .prot-stat { background: white; border-radius: 14px; padding: 20px; border: 1px solid rgba(0,0,0,0.06); text-align: center; }
@@ -331,7 +331,7 @@ footer p { font-size: 13px; color: rgba(255,255,255,0.2); }
   <div class="nav-logo">DOCE<span>WEEKS</span></div>
   <ul class="nav-links">
     <li><a href="#transformacion">Historia</a></li>
-    <li><a href="#calculadora">Precios</a></li>
+    <li><a href="#precios">Precios</a></li>
     <li><a href="#proteina">Proteína Week</a></li>
     <li><a href="#faq">FAQ</a></li>
   </ul>
@@ -357,7 +357,7 @@ footer p { font-size: 13px; color: rgba(255,255,255,0.2); }
       </div>
     </div>
 
-    <div style="position:relative;" class="reveal" style="transition-delay:0.15s">
+    <div class="reveal" style="position:relative; transition-delay:0.15s">
       <div class="hero-foto">
         <div class="hero-foto-placeholder">
           📸 Reemplaza con<br><strong>gabo-principal.jpg</strong>
@@ -729,17 +729,6 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-// ── NAV (cierra menú móvil al navegar) ──
-const navLinks = document.querySelector('.nav-links');
-const mobileClose = () => {
-  if (!navLinks) return;
-  const isMobile = window.matchMedia('(max-width: 900px)').matches;
-  if (isMobile) navLinks.style.display = 'none';
-};
-document.querySelectorAll('.nav-links a[href^="#"]').forEach(a => {
-  a.addEventListener('click', mobileClose);
-});
-
 // ── FAQ ──
 document.querySelectorAll('.faq-pregunta').forEach(btn => {
   btn.addEventListener('click', () => {
@@ -817,43 +806,32 @@ function enviarInscripcion() {
   const nombre = document.getElementById('f-nombre').value.trim();
   const email = document.getElementById('f-email').value.trim();
   const wa = document.getElementById('f-wa').value.trim();
+  if (!nombre || !email || !wa) { alert('Completa todos los campos'); return; }
 
-  if (!planElegido) {
-    alert('Primero elige un plan para continuar.');
-    return;
-  }
+  const mensaje =
+    `Hola Doce Weeks, elegí el siguiente plan: ${planElegido}. ` +
+    `Mis datos son: Nombre: ${nombre}, Correo: ${email}, WhatsApp: ${wa}, ` +
+    `Peso: ${datosCalculadora.peso || '—'}kg, Edad: ${datosCalculadora.edad || '—'}, ` +
+    `Altura: ${datosCalculadora.altura || '—'}cm, Objetivo: ${datosCalculadora.objetivos || '—'}`;
 
-  if (!nombre || !email || !wa) {
-    alert('Completa todos los campos del formulario.');
-    return;
-  }
+  window.open(`https://wa.link/8hm66g?text=${encodeURIComponent(mensaje)}`, '_blank');
+}
 
-  const peso = datosCalculadora.peso ?? '—';
-  const altura = datosCalculadora.altura ?? '—';
-  const edad = datosCalculadora.edad ?? '—';
-  const objetivos = datosCalculadora.objetivos || '—';
+// ── FORMULARIO LEGADO (si se habilita la sección #formulario) ──
+function enviarWhatsApp(event) {
+  event?.preventDefault?.();
+  const nombre = document.getElementById('nombre')?.value?.trim() || '';
+  const email = document.getElementById('email')?.value?.trim() || '';
+  const wa = document.getElementById('wa-numero')?.value?.trim() || '';
+  const peso = document.getElementById('peso-form')?.value?.trim() || '';
+  if (!nombre || !email || !wa) { alert('Completa nombre, correo y WhatsApp'); return; }
 
-  const lineasMensaje = [
-    'Hola Doce Weeks 👋',
-    '',
-    `*Mi nombre es:* ${nombre}`,
-    `*Mi estado físico es:* ${planElegido}`,
-    '',
-    '*Datos del usuario:*',
-    `- Email: ${email}`,
-    `- WhatsApp: ${wa}`,
-    '',
-    '*Resultados de la calculadora:*',
-    `- Peso: ${peso} kg`,
-    `- Altura: ${altura} cm`,
-    `- Edad: ${edad}`,
-    `- Objetivos: ${objetivos}`,
-  ];
+  const mensaje =
+    `Hola Doce Weeks, quiero apartar mi cupo. ` +
+    `Nombre: ${nombre}, Correo: ${email}, WhatsApp: ${wa}` +
+    (peso ? `, Peso actual: ${peso}kg` : '');
 
-  const mensaje = lineasMensaje.join('\n');
-  const numeroWhatsApp = '584168155236';
-  const whatsappUrl = `https://api.whatsapp.com/send/?phone=${numeroWhatsApp}&text=${encodeURIComponent(mensaje)}`;
-  window.open(whatsappUrl, '_blank');
+  window.open(`https://wa.link/8hm66g?text=${encodeURIComponent(mensaje)}`, '_blank');
 }
 
 // ── COUNTDOWN ──
